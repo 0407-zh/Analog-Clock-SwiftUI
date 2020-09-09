@@ -11,6 +11,7 @@
 		ADA9683725090F260035FB0C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA9683625090F260035FB0C /* ContentView.swift */; };
 		ADA9683925090F280035FB0C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADA9683825090F280035FB0C /* Assets.xcassets */; };
 		ADA9683C25090F280035FB0C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADA9683B25090F280035FB0C /* Preview Assets.xcassets */; };
+		ADA96844250917710035FB0C /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA96843250917710035FB0C /* Time.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		ADA9683825090F280035FB0C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ADA9683B25090F280035FB0C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		ADA9683D25090F280035FB0C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ADA96843250917710035FB0C /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 			children = (
 				ADA9683425090F260035FB0C /* Analog_ClockApp.swift */,
 				ADA9683625090F260035FB0C /* ContentView.swift */,
+				ADA96843250917710035FB0C /* Time.swift */,
 				ADA9683825090F280035FB0C /* Assets.xcassets */,
 				ADA9683D25090F280035FB0C /* Info.plist */,
 				ADA9683A25090F280035FB0C /* Preview Content */,
@@ -138,6 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADA96844250917710035FB0C /* Time.swift in Sources */,
 				ADA9683725090F260035FB0C /* ContentView.swift in Sources */,
 				ADA9683525090F260035FB0C /* Analog_ClockApp.swift in Sources */,
 			);
