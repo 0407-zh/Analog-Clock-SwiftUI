@@ -31,9 +31,10 @@ struct Home: View {
     var body: some View {
         VStack {
             HStack {
-                Text("Analog Clock")
-                    .font(.title)
+                Text(Locale.current.localizedString(forRegionCode: Locale.current.regionCode!) ?? "")
+                    .font(.largeTitle)
                     .fontWeight(.heavy)
+//                    .padding(.top, 35)
                 
                 Spacer()
                 
@@ -68,7 +69,7 @@ struct Home: View {
                 
                 //Seconds
                 Rectangle()
-                    .fill(Color.primary)
+                    .fill(Color.red)
                     .frame(width: 2, height: (width - 180) / 2)
                     .offset(y: -(width - 180) / 4)
                     .rotationEffect(.init(degrees: Double(currentTime.sec) * 6))
@@ -93,7 +94,15 @@ struct Home: View {
             }
             .frame(width: width - 80, height: width - 80)
             
-            
+//            Text(Locale.current.localizedString(forRegionCode: Locale.current.regionCode!) ?? "")
+//                .font(.largeTitle)
+//                .fontWeight(.heavy)
+//                .padding(.top, 35)
+//
+            Text(getTime())
+                .font(.system(size: 45))
+                .fontWeight(.heavy)
+                .padding(.top, 10)
             
             Spacer()
         }
@@ -119,5 +128,11 @@ struct Home: View {
                 currentTime = Time(sec: sec, min: min, hour: hour)
             }
         }
+    }
+    func getTime() -> String {
+        let format = DateFormatter()
+        format.dateFormat = "hh:mm a"
+        
+        return format.string(from: Date())
     }
 }
