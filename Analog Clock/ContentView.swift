@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import UserNotificationsUI
 
 struct ContentView: View {
     @State var isDark: Bool = false
+    @State var is12h: Bool = false
     var body: some View {
-        Home(isDark: $isDark)
+        Home(is12h: $is12h, isDark: $isDark)
             .navigationBarHidden(true)
             .preferredColorScheme(isDark ? .dark : .light)
     }
@@ -25,6 +27,7 @@ struct ContentView_Previews: PreviewProvider {
 struct Home: View {
     @State var currentTime = Time(sec: 0, min: 0, hour: 0)
     @State var receiver = Timer.publish(every: 1, on: .current, in: .default).autoconnect()
+    @Binding var is12h: Bool
     @Binding var isDark: Bool
     var width = UIScreen.main.bounds.width
         
@@ -39,8 +42,8 @@ struct Home: View {
                 Spacer()
                 
                 Button(action: {
-                        isDark.toggle()
-                    
+                    isDark.toggle()
+                    vibrationFeedback()
                 }, label: {
                     Image(systemName: isDark ? "sun.min.fill" : "moon.fill")
                         .font(.system(size: 22))
@@ -51,6 +54,13 @@ struct Home: View {
                 })
             }
             .padding()
+            
+            Spacer()
+            
+            Text(getTime())
+                .font(.system(size: 45))
+                .fontWeight(.heavy)
+                .padding(.top, 10)
             
             Spacer()
             
@@ -67,13 +77,6 @@ struct Home: View {
                         .rotationEffect(.init(degrees: Double(i) * 6))
                 }
                 
-                //Seconds
-                Rectangle()
-                    .fill(Color.red)
-                    .frame(width: 2, height: (width - 180) / 2)
-                    .offset(y: -(width - 180) / 4)
-                    .rotationEffect(.init(degrees: Double(currentTime.sec) * 6))
-                
                 //Minutes
                 Rectangle()
                     .fill(Color.primary)
@@ -86,7 +89,14 @@ struct Home: View {
                     .fill(Color.primary)
                     .frame(width: 4.5, height: (width - 240) / 2)
                     .offset(y: -(width - 240) / 4)
-                    .rotationEffect(.init(degrees: Double(currentTime.hour) * 30))
+                    .rotationEffect(.init(degrees: Double(currentTime.hour + currentTime.min / 60) * 30))
+                
+                //Seconds
+                Rectangle()
+                    .fill(Color.red)
+                    .frame(width: 2, height: (width - 180) / 2)
+                    .offset(y: -(width - 180) / 4)
+                    .rotationEffect(.init(degrees: Double(currentTime.sec) * 6))
                 
                 Circle()
                     .fill(Color.primary)
@@ -94,15 +104,17 @@ struct Home: View {
             }
             .frame(width: width - 80, height: width - 80)
             
-//            Text(Locale.current.localizedString(forRegionCode: Locale.current.regionCode!) ?? "")
-//                .font(.largeTitle)
-//                .fontWeight(.heavy)
-//                .padding(.top, 35)
-//
-            Text(getTime())
-                .font(.system(size: 45))
-                .fontWeight(.heavy)
-                .padding(.top, 10)
+            Button(action: {
+                is12h.toggle()
+            }, label: {
+                if is12h {
+                    Text("12h")
+                        .modifier(FormatFomt())
+                } else {
+                    Text("24h")
+                        .modifier(FormatFomt())
+                }
+            })
             
             Spacer()
         }
@@ -129,10 +141,30 @@ struct Home: View {
             }
         }
     }
+    
+    func vibrationFeedback() {
+        let generator = UINotificationFeedbackGenerator()
+            generator.notificationOccurred(.success)
+    }
+    
     func getTime() -> String {
         let format = DateFormatter()
-        format.dateFormat = "hh:mm a"
-        
+        if is12h {
+            format.dateFormat = "hh:mm a"
+        } else {
+            format.dateFormat = "HH:mm"
+        }
+
+//        format.dateFormat = "HH:mm"
         return format.string(from: Date())
+    }
+}
+
+struct FormatFomt: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.system(size: 35))
+            .foregroundColor(.primary)
+            .cornerRadius(20)
     }
 }
